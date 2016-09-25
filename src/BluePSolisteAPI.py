@@ -18,8 +18,13 @@ class RegexConverter(BaseConverter):
 app.url_map.converters['regex'] = RegexConverter
 
 
+@app.route('/')
+def version():
+    return 'BluePSolisteAPI v0.0.1'
+
+
 @app.route('/install/<regex("[0-9]+"):gameid>')
-def hello_world(gameid):
+def install_game(gameid):
     s3_client.download_file('bluepolo-games', gameid + '.zip', 'Z:\\' + gameid + '.zip')
     with ZipFile('Z:\\' + gameid + '.zip', 'r') as zip_ref:
         zip_ref.extractall('Z:\\' + gameid)
